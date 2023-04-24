@@ -26,7 +26,7 @@ LINKFLAGS += -DGPU
 # C++ FLAGS
 CXXFLAGS  = $(BOOSTFLAGS)
 #CXXFLAGS += -std=c++11 -D_GLIBCXX_USE_CXX11_ABI=0 # For gcc > 5.2.1, by CCH on 2023-04-23
-#CXXFLAGS += # For gcc > 5.2.1, by CCH on 2023-04-23
+CXXFLAGS += -std=c++11 # by CCH on 2023-04-23
 CXXFLAGS += -O3 # Optimisation
 CXXFLAGS += -Wall # Warning messages
 CXXFLAGS += -fopenmp # Enable OpenMP
