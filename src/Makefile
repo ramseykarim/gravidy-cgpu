@@ -1,32 +1,19 @@
 # Makefile
-HOST:=$(shell hostname | cut -d . -f 1)
-
-ifeq ($(HOST), gpu-01)
-    BOOST_PATH=/cluster/boost/1.52.0
-    CUDA_PATH=/cluster/gpu/nvidia/5.5
-    MPI_LIB_PATH=/cluster/openmpi/SL6/1.5.4/gcc/lib
-    MPI_INC_PATH=/cluster/openmpi/SL6/1.5.4/gcc/include
-else ifeq ($(HOST), Gateway)
-    BOOST_PATH=/usr
-    CUDA_PATH=/opt/cuda
-    MPI_LIB_PATH=/usr/lib/openmpi
-    MPI_INC_PATH=/usr/include/openmpi
-else
-    BOOST_PATH=
-    CUDA_PATH=
-    MPI_LIB_PATH=
-    MPI_INC_PATH=
-endif
+CUDA_PATH=/cvmfs/hpcsw.umd.edu/spack-software/2022.06.15/linux-rhel8-zen/gcc-8.4.0/cuda-10.2.89-omyaqz6mv6t3fihltamr67fnj5xij5an
+MPI_LIB_PATH=$(OPENMPI_LIBDIR)
+MPI_INC_PATH=$(OPENMPI_INCDIR)
 
 # Compilers
 CXX=  g++
-NVCC= $(CUDA_PATH)/bin/nvcc
+NVCC= nvcc
 
 # FLAGS
 
 # Boost FLAGS
-BOOSTFLAGS  = -L$(BOOST_PATH)/lib
-BOOSTFLAGS += -I$(BOOST_PATH)/include
+#BOOSTFLAGS  = -L$(BOOST_PATH)/lib
+#BOOSTFLAGS += -I$(BOOST_PATH)/include
+BOOSTFLAGS  = -L$(BOOST_LIBDIR)
+BOOSTFLAGS += -I$(BOOST_INCDIR)
 BOOSTFLAGS += -lboost_program_options
 
 # Links FLAGS
@@ -38,6 +25,8 @@ LINKFLAGS += -DGPU
 
 # C++ FLAGS
 CXXFLAGS  = $(BOOSTFLAGS)
+#CXXFLAGS += -std=c++11 -D_GLIBCXX_USE_CXX11_ABI=0 # For gcc > 5.2.1, by CCH on 2023-04-23
+#CXXFLAGS += # For gcc > 5.2.1, by CCH on 2023-04-23
 CXXFLAGS += -O3 # Optimisation
 CXXFLAGS += -Wall # Warning messages
 CXXFLAGS += -fopenmp # Enable OpenMP
