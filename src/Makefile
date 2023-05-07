@@ -5,13 +5,13 @@ MPI_INC_PATH=$(OPENMPI_INCDIR)
 
 # Compilers
 CXX=  g++
-NVCC= nvcc
+NVCC= $(CUDA_PATH)/bin/nvcc
 
 # FLAGS
 
 # Boost FLAGS
-#BOOSTFLAGS  = -L$(BOOST_PATH)/lib
-#BOOSTFLAGS += -I$(BOOST_PATH)/include
+BOOST_LIBDIR = $(BOOST_ROOT)/lib
+BOOST_INCDIR = $(BOOST_ROOT)/include
 BOOSTFLAGS  = -L$(BOOST_LIBDIR)
 BOOSTFLAGS += -I$(BOOST_INCDIR)
 BOOSTFLAGS += -lboost_program_options
