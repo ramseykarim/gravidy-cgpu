@@ -362,7 +362,7 @@ void OptionsParser::print()
 
   // TODO: Use the parsed options
 
-  std::cout << "parser:\n";
+  std::cout << "Simulation parameters:\n";
   std::cout << "input_filename: " << input_filename << "\n";
   std::cout << "output_filename: " << output_filename << "\n";
   std::cout << "integration_time: " << integration_time << "\n";

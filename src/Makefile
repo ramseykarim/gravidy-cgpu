@@ -4,20 +4,21 @@ MPI_LIB_PATH=$(OPENMPI_LIBDIR)
 MPI_INC_PATH=$(OPENMPI_INCDIR)
 
 # Compilers
-# CXX=  g++
-CXX=  g++-13 -g
+CXX=  g++
 NVCC= $(CUDA_PATH)/bin/nvcc
 
 # FLAGS
 
 # Boost FLAGS
-# BOOST_LIBDIR = $(BOOST_ROOT)/lib
-# BOOST_INCDIR = $(BOOST_ROOT)/include
-# BOOSTFLAGS  = -L$(BOOST_LIBDIR)
-# BOOSTFLAGS += -I$(BOOST_INCDIR)
-# BOOSTFLAGS += -lboost_program_options
-BOOSTFLAGS =
-
+ifeq ($(shell uname), Darwin)
+	BOOSTFLAGS =
+else
+	BOOST_LIBDIR = $(BOOST_ROOT)/lib
+	BOOST_INCDIR = $(BOOST_ROOT)/include
+	BOOSTFLAGS  = -L$(BOOST_LIBDIR)
+	BOOSTFLAGS += -I$(BOOST_INCDIR)
+	BOOSTFLAGS += -lboost_program_options
+endif
 
 # Links FLAGS
 LINKFLAGS  = -L$(CUDA_PATH)/lib64
@@ -35,20 +36,25 @@ CXXFLAGS += -Wall # Warning messages
 CXXFLAGS += -fopenmp # Enable OpenMP
 CXXFLAGS += -pipe # Pipes over temp files in the process
 CXXFLAGS += -fstack-protector # Emit extra code to check buffer overflow
-# CXXFLAGS += -Wl,-z,relro # RO relocation table area in the final ELF
-CXXFLAGS += -Wl,-headerpad_max_install_names
-# CXXFLAGS += -Wl,-z,now # Prevent GOT overwrite attacks
-CXXFLAGS += -Wl,-dead_strip
 CXXFLAGS += -Wformat-security # Prevent formats vulnerabilities
 CXXFLAGS += -Wpointer-arith # Prevent void size
 CXXFLAGS += -Wformat-nonliteral # Prevent non literal format string
-# CXXFLAGS += -Wl,-O1 # Optimisation for the linker
-# CXXFLAGS += -Wl,--discard-all # Discard local symbols
-# CXXFLAGS += -Wl,--no-undefined # Prevent missing/unresolved symbols
 CXXFLAGS += -rdynamic # Exported symbols in dynamics symbol table
+ifeq ($(shell uname), Darwin)
+	CXXFLAGS += -Wl,-headerpad_max_install_names
+	CXXFLAGS += -Wl,-dead_strip
+else
+	CXXFLAGS += -Wl,-z,relro # RO relocation table area in the final ELF
+	CXXFLAGS += -Wl,-z,now # Prevent GOT overwrite attacks
+	CXXFLAGS += -Wl,-O1 # Optimisation for the linker
+	CXXFLAGS += -Wl,--discard-all # Discard local symbols
+	CXXFLAGS += -Wl,--no-undefined # Prevent missing/unresolved symbols
+endif
 #CXXFLAGS += -pg # For gprof
 #CXXFLAGS += -Werror # Warnings will be errors
-# CXXFLAGS += -DDEBUG -g # Debugging
+ifeq ($(DEBUG),1)
+	CXXFLAGS += -DDEBUG -g # Debugging
+endif
 
 # MPI FLAGS
 MPIFLAGS  = -L$(MPI_LIB_PATH)

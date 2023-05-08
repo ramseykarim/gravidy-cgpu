@@ -61,9 +61,9 @@ int main(int argc, char *argv[])
 
     // Parsing the command-line parameters
     OptionsParser op(argc, argv);
+    auto flag = op.check_options();
     op.print();
-    return 0;
-    if (!op.check_options())
+    if (!flag)
       return 1;
 
     // Initialization of the system
