@@ -1,36 +1,6 @@
 /*
- * Copyright (c) 2016
  *
- * Cristián Maureira-Fredes <cmaureirafredes@gmail.com>
- *
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- * notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- * notice, this list of conditions and the following disclaimer in the
- * documentation and/or other materials provided with the distribution.
- *
- * 3. The name of the author may not be used to endorse or promote
- * products derived from this software without specific prior written
- * permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS
- * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
- * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
- * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
- * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * ChongChong He <chongchonghe99@gmail.com>
  *
  */
 #include <map>
@@ -38,10 +8,7 @@
 #include <getopt.h>
 #include "OptionsParser.hpp"
 
-/** Constructor which includes the options and requirements for the
- * command line interface
- */
-
+/** Constructor which includes the options and requirements for the command line interface */
 OptionsParser::OptionsParser(int argc, char *argv[]) : argc_(argc), argv_(argv), integration_time(1.0f), interval_time(0.125f), gpus(0), snapshot_time(0.0f), softening(1e-4f), eta(0.01f), snapshot_number(0), length_output_number(0), resume(false), help(false)
 {
   parse_command_line_arguments();
@@ -49,6 +16,7 @@ OptionsParser::OptionsParser(int argc, char *argv[]) : argc_(argc), argv_(argv),
 
 OptionsParser::~OptionsParser() {}
 
+// This function actaully parses the command line arguments
 void OptionsParser::parse_command_line_arguments()
 {
   // const char *const short_options = "hi:o:t:r:s:e:pz:l:ag:";
@@ -120,15 +88,6 @@ void OptionsParser::parse_command_line_arguments()
 }
 
 /** Method that check if a file exist on the system */
-// bool OptionsParser::file_exists(std::string filename)
-// {
-//   struct stat buffer;
-//   if (stat(filename.c_str(), &buffer) != -1)
-//   {
-//     return true;
-//   }
-//   return false;
-// }
 bool OptionsParser::file_exists(std::string filename)
 {
   std::ifstream file(filename.c_str());
