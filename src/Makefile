@@ -4,17 +4,20 @@ MPI_LIB_PATH=$(OPENMPI_LIBDIR)
 MPI_INC_PATH=$(OPENMPI_INCDIR)
 
 # Compilers
-CXX=  g++
-NVCC= nvcc
+# CXX=  g++
+CXX=  g++-13 -g
+NVCC= $(CUDA_PATH)/bin/nvcc
 
 # FLAGS
 
 # Boost FLAGS
-#BOOSTFLAGS  = -L$(BOOST_PATH)/lib
-#BOOSTFLAGS += -I$(BOOST_PATH)/include
-BOOSTFLAGS  = -L$(BOOST_LIBDIR)
-BOOSTFLAGS += -I$(BOOST_INCDIR)
-BOOSTFLAGS += -lboost_program_options
+# BOOST_LIBDIR = $(BOOST_ROOT)/lib
+# BOOST_INCDIR = $(BOOST_ROOT)/include
+# BOOSTFLAGS  = -L$(BOOST_LIBDIR)
+# BOOSTFLAGS += -I$(BOOST_INCDIR)
+# BOOSTFLAGS += -lboost_program_options
+BOOSTFLAGS =
+
 
 # Links FLAGS
 LINKFLAGS  = -L$(CUDA_PATH)/lib64
@@ -26,23 +29,26 @@ LINKFLAGS += -DGPU
 # C++ FLAGS
 CXXFLAGS  = $(BOOSTFLAGS)
 #CXXFLAGS += -std=c++11 -D_GLIBCXX_USE_CXX11_ABI=0 # For gcc > 5.2.1, by CCH on 2023-04-23
-CXXFLAGS += -std=c++11 # by CCH on 2023-04-23
+# CXXFLAGS += -std=c++11 # by CCH on 2023-04-23
 CXXFLAGS += -O3 # Optimisation
 CXXFLAGS += -Wall # Warning messages
 CXXFLAGS += -fopenmp # Enable OpenMP
 CXXFLAGS += -pipe # Pipes over temp files in the process
 CXXFLAGS += -fstack-protector # Emit extra code to check buffer overflow
-CXXFLAGS += -Wl,-z,relro # RO relocation table area in the final ELF
-CXXFLAGS += -Wl,-z,now # Prevent GOT overwrite attacks
+# CXXFLAGS += -Wl,-z,relro # RO relocation table area in the final ELF
+CXXFLAGS += -Wl,-headerpad_max_install_names
+# CXXFLAGS += -Wl,-z,now # Prevent GOT overwrite attacks
+CXXFLAGS += -Wl,-dead_strip
 CXXFLAGS += -Wformat-security # Prevent formats vulnerabilities
 CXXFLAGS += -Wpointer-arith # Prevent void size
 CXXFLAGS += -Wformat-nonliteral # Prevent non literal format string
-CXXFLAGS += -Wl,-O1 # Optimisation for the linker
-CXXFLAGS += -Wl,--discard-all # Discard local symbols
-CXXFLAGS += -Wl,--no-undefined # Prevent missing/unresolved symbols
+# CXXFLAGS += -Wl,-O1 # Optimisation for the linker
+# CXXFLAGS += -Wl,--discard-all # Discard local symbols
+# CXXFLAGS += -Wl,--no-undefined # Prevent missing/unresolved symbols
 CXXFLAGS += -rdynamic # Exported symbols in dynamics symbol table
 #CXXFLAGS += -pg # For gprof
 #CXXFLAGS += -Werror # Warnings will be errors
+# CXXFLAGS += -DDEBUG -g # Debugging
 
 # MPI FLAGS
 MPIFLAGS  = -L$(MPI_LIB_PATH)
