@@ -60,8 +60,12 @@ int main(int argc, char *argv[])
     #endif
 
     // Parsing the command-line parameters
-    OptionsParser op(argc,argv);
-    if(!op.check_options()) return 1;
+    OptionsParser op(argc, argv);
+    auto flag = op.check_options();
+    if (!flag)
+      return 1;
+    else
+      op.print();
 
     // Initialization of the system
     NbodySystem ns(op);

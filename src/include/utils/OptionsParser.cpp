@@ -421,3 +421,28 @@ bool OptionsParser::check_options()
 
     return true;
 }
+
+
+void OptionsParser::print()
+{
+  // OptionsParser parser(argc, argv);
+
+  // TODO: Use the parsed options
+
+  std::cout << "Running simulation with the following parameters:\n";
+  std::cout << "input_filename: " << input_filename << "\n";
+  std::cout << "output_filename: " << output_filename << "\n";
+  std::cout << "integration_time: " << integration_time << "\n";
+  std::cout << "resume_filename: " << resume_filename << "\n";
+  std::cout << "resume: " << resume << "\n";
+  std::cout << "snapshot_filename: " << snapshot_filename << "\n";
+  std::cout << "snapshot_number: " << snapshot_number << "\n";
+  std::cout << "eta: " << eta << "\n";
+  std::cout << "softening: " << softening << "\n";
+  std::cout << "interval_time: " << interval_time << "\n";
+  std::cout << "length_output_number: " << length_output_number << "\n";
+  std::cout << "print_lagrange: " << ops.print_lagrange << "\n";
+  std::cout << "print_all: " << ops.print_all << "\n";
+  std::cout << "print_screen: " << ops.print_screen << "\n";
+  std::cout << "gpus: " << gpus << "\n";
+}

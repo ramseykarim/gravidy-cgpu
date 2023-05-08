@@ -1,3 +1,5 @@
+use_boost = 0
+
 # Makefile
 CUDA_PATH=/cvmfs/hpcsw.umd.edu/spack-software/2022.06.15/linux-rhel8-zen/gcc-8.4.0/cuda-10.2.89-omyaqz6mv6t3fihltamr67fnj5xij5an
 MPI_LIB_PATH=$(OPENMPI_LIBDIR)
@@ -10,11 +12,19 @@ NVCC= $(CUDA_PATH)/bin/nvcc
 # FLAGS
 
 # Boost FLAGS
-BOOST_LIBDIR = $(BOOST_ROOT)/lib
-BOOST_INCDIR = $(BOOST_ROOT)/include
-BOOSTFLAGS  = -L$(BOOST_LIBDIR)
-BOOSTFLAGS += -I$(BOOST_INCDIR)
-BOOSTFLAGS += -lboost_program_options
+BOOSTFLAGS =
+ifeq ($(shell uname), Darwin)
+	use_boost = 0
+else
+	ifeq ($(use_boost), 1)
+		BOOST_LIBDIR = $(BOOST_ROOT)/lib
+		BOOST_INCDIR = $(BOOST_ROOT)/include
+		BOOSTFLAGS  = -L$(BOOST_LIBDIR)
+		BOOSTFLAGS += -I$(BOOST_INCDIR)
+		BOOSTFLAGS += -lboost_program_options
+		BOOSTFLAGS += -DBOOST
+	endif
+endif
 
 # Links FLAGS
 LINKFLAGS  = -L$(CUDA_PATH)/lib64
@@ -26,23 +36,31 @@ LINKFLAGS += -DGPU
 # C++ FLAGS
 CXXFLAGS  = $(BOOSTFLAGS)
 #CXXFLAGS += -std=c++11 -D_GLIBCXX_USE_CXX11_ABI=0 # For gcc > 5.2.1, by CCH on 2023-04-23
-CXXFLAGS += -std=c++11 # by CCH on 2023-04-23
+# CXXFLAGS += -std=c++11 # by CCH on 2023-04-23
 CXXFLAGS += -O3 # Optimisation
 CXXFLAGS += -Wall # Warning messages
 CXXFLAGS += -fopenmp # Enable OpenMP
 CXXFLAGS += -pipe # Pipes over temp files in the process
 CXXFLAGS += -fstack-protector # Emit extra code to check buffer overflow
-CXXFLAGS += -Wl,-z,relro # RO relocation table area in the final ELF
-CXXFLAGS += -Wl,-z,now # Prevent GOT overwrite attacks
 CXXFLAGS += -Wformat-security # Prevent formats vulnerabilities
 CXXFLAGS += -Wpointer-arith # Prevent void size
 CXXFLAGS += -Wformat-nonliteral # Prevent non literal format string
-CXXFLAGS += -Wl,-O1 # Optimisation for the linker
-CXXFLAGS += -Wl,--discard-all # Discard local symbols
-CXXFLAGS += -Wl,--no-undefined # Prevent missing/unresolved symbols
 CXXFLAGS += -rdynamic # Exported symbols in dynamics symbol table
+ifeq ($(shell uname), Darwin)
+	CXXFLAGS += -Wl,-headerpad_max_install_names
+	CXXFLAGS += -Wl,-dead_strip
+else
+	CXXFLAGS += -Wl,-z,relro # RO relocation table area in the final ELF
+	CXXFLAGS += -Wl,-z,now # Prevent GOT overwrite attacks
+	CXXFLAGS += -Wl,-O1 # Optimisation for the linker
+	CXXFLAGS += -Wl,--discard-all # Discard local symbols
+	CXXFLAGS += -Wl,--no-undefined # Prevent missing/unresolved symbols
+endif
 #CXXFLAGS += -pg # For gprof
 #CXXFLAGS += -Werror # Warnings will be errors
+ifeq ($(DEBUG),1)
+	CXXFLAGS += -DDEBUG -g # Debugging
+endif
 
 # MPI FLAGS
 MPIFLAGS  = -L$(MPI_LIB_PATH)
@@ -62,7 +80,11 @@ NVFLAGS += -O3
 #NVFLAGS=-std=c++11 -arch=sm_20 -D_MWAITXINTRIN_H_INCLUDED # For gcc > 5.2.1
 
 # General Objects
-OBJS  = include/utils/OptionsParser.o
+ifeq ($(use_boost), 1)
+	OBJS  = include/utils/OptionsParser.o
+else
+	OBJS  = include/utils/OptionsParserBoostless.o
+endif
 OBJS += include/utils/NbodyUtils.o
 OBJS += include/utils/Logger.o
 OBJS += include/Hermite4.o

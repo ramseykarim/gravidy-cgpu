@@ -36,47 +36,39 @@
 #ifndef OPTIONSPARSER_HPP
 #define OPTIONSPARSER_HPP
 #include "../common.hpp"
-#include <boost/program_options.hpp>
 #include <sys/stat.h>
 
-namespace po = boost::program_options;
+class OptionsParser
+{
+public:
+  OptionsParser(int argc, char *argv[]);
+  ~OptionsParser();
 
-/**
- * Class in charge to handle all the command-line parameters.
- * Besides handling the information, this class uses the boost/program_options
- * module to verify all the options.
- */
+  std::string input_filename;
+  std::string output_filename;
+  std::string resume_filename;
+  std::string snapshot_filename;
+  float integration_time;
+  float interval_time;
+  int gpus;
+  float snapshot_time;
+  float softening;
+  float eta;
+  unsigned int snapshot_number;
+  unsigned int length_output_number;
+  bool resume;
+  options ops;
+  bool help;
 
-class OptionsParser {
-    public:
-        OptionsParser(int argc, char *argv[]);
-        ~OptionsParser();
+  bool file_exists(std::string filename);
+  bool check_options();
+  void print();
 
-        std::string input_filename;
-        std::string output_filename;
-        std::string resume_filename;
-        std::string snapshot_filename;
-        float integration_time;
-        float interval_time;
-        int gpus;
-        float snapshot_time;
-        float softening;
-        float eta;
-        unsigned int snapshot_number;
-        unsigned int length_output_number;
-        bool resume;
-        options ops;
-        po::variables_map vm;
-        po::options_description desc;
+private:
+  int argc_;
+  char **argv_;
 
-        bool file_exists(std::string filename);
-        bool check_options();
-        void print();
-
-    private:
-        int argc;
-        char *argv;
-
+  void parse_command_line_arguments();
 };
 
 #endif

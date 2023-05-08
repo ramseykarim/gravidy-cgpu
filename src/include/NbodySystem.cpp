@@ -112,7 +112,7 @@ void NbodySystem::read_input_file()
                 {
                     // remove all the "#" and ":"
                     char chars[] = "#:";
-                    for (unsigned int i = 0; i < strlen(chars); i++)
+                    for (unsigned int i = 0; i < sizeof(chars); i++)
                     {
                         line.erase(std::remove(line.begin(),
                                                line.end(),
