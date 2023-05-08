@@ -40,6 +40,11 @@
 #include <algorithm>
 
 #include "common.hpp"
+#ifdef BOOST
+#include "utils/OptionsParser.hpp"
+#else
+#include "utils/OptionsParserBoostless.hpp"
+#endif
 #include "utils/OptionsParser.hpp"
 #define MAXGPUS 4
 

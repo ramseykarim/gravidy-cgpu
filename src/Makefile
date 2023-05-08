@@ -1,3 +1,5 @@
+use_boost = 0
+
 # Makefile
 CUDA_PATH=/cvmfs/hpcsw.umd.edu/spack-software/2022.06.15/linux-rhel8-zen/gcc-8.4.0/cuda-10.2.89-omyaqz6mv6t3fihltamr67fnj5xij5an
 MPI_LIB_PATH=$(OPENMPI_LIBDIR)
@@ -10,14 +12,18 @@ NVCC= $(CUDA_PATH)/bin/nvcc
 # FLAGS
 
 # Boost FLAGS
+BOOSTFLAGS =
 ifeq ($(shell uname), Darwin)
-	BOOSTFLAGS =
+	use_boost = 0
 else
-	BOOST_LIBDIR = $(BOOST_ROOT)/lib
-	BOOST_INCDIR = $(BOOST_ROOT)/include
-	BOOSTFLAGS  = -L$(BOOST_LIBDIR)
-	BOOSTFLAGS += -I$(BOOST_INCDIR)
-	BOOSTFLAGS += -lboost_program_options
+	ifeq ($(use_boost), 1)
+		BOOST_LIBDIR = $(BOOST_ROOT)/lib
+		BOOST_INCDIR = $(BOOST_ROOT)/include
+		BOOSTFLAGS  = -L$(BOOST_LIBDIR)
+		BOOSTFLAGS += -I$(BOOST_INCDIR)
+		BOOSTFLAGS += -lboost_program_options
+		BOOSTFLAGS += -DBOOST
+	endif
 endif
 
 # Links FLAGS
@@ -74,7 +80,11 @@ NVFLAGS += -O3
 #NVFLAGS=-std=c++11 -arch=sm_20 -D_MWAITXINTRIN_H_INCLUDED # For gcc > 5.2.1
 
 # General Objects
-OBJS  = include/utils/OptionsParser.o
+ifeq ($(use_boost), 1)
+	OBJS  = include/utils/OptionsParser.o
+else
+	OBJS  = include/utils/OptionsParserBoostless.o
+endif
 OBJS += include/utils/NbodyUtils.o
 OBJS += include/utils/Logger.o
 OBJS += include/Hermite4.o
