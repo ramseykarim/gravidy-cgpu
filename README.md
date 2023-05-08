@@ -21,13 +21,59 @@ Maureira-Fredes, C and Amaro-Seoane, P. ["GraviDy, a GPU modular, parallel direc
 
 ## How to compile?
 
-### On UMD Astronomy machines
+First, clone the repositotry
 
 ```sh
 git clone https://github.com/chongchonghe/gravidy
 cd gravidy/src
-make cpu CXX="g++11"
 ```
+
+Then, depending on the OS you are on, 
+
+- On UMD Astronomy machines, the default g++ is version 8, which is outdated. Version 11 is available in PATH as g++11
+
+```sh
+make CXX="g++11"
+```
+
+The original version of Gravidy use Boost library to do command parsing. I rewrote that part using pure C++ and removed this dependency, so the code does not rely on any library. If you want to use the original version with Boost, pass `use_boost=1` as an argument to make.
+
+- On macOS, use your latest version of g++ isntalled via homebrew. The default g++, or Apple clang, does not support omp. The Boost library failed on macOS, so Makefile automatically set use_boost to 0 on Mac. 
+
+```sh
+make CXX="g++-13"
+```
+
+- On Zaratan
+
+CPU (with OpenMP):
+
+```sh
+module load gcc/11.3.0
+# module load boost/1.79.0
+make
+```
+
+To use Boost command parsing, uncomment the line that loads boost, and pass `use_boost=1` as an argument to make.
+
+MPI:
+
+```sh
+module load gcc/11.3.0
+module load openmpi/4.1.4
+# module load boost/1.79.0
+make mpi
+```
+
+CUDA: failed. I couldn't make it work. Let me know if you can.
+
+```sh
+module load gcc/11.3.0
+module load cuda/11.8.0
+# module load boost/1.79.0
+make gpu
+```
+
 
 ## Licence
 
