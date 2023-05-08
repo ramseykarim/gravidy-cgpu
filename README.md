@@ -56,7 +56,7 @@ make
 
 To use Boost command parsing, uncomment the line that loads boost, and pass `use_boost=1` as an argument to make.
 
-MPI:
+MPI: Be sure to run `make distclean` before recompiling if you changed your module version or modified Makefile.
 
 ```sh
 module load gcc/11.3.0
@@ -68,9 +68,9 @@ make mpi
 CUDA: failed. I couldn't make it work. Let me know if you can.
 
 ```sh
-module load gcc/11.3.0
-module load cuda/11.8.0
-# module load boost/1.79.0
+module load gcc/8.4.0
+module load cuda/10.2.89
+# module load boost/1.72.0
 make gpu
 ```
 

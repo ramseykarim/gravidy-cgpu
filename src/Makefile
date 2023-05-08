@@ -154,7 +154,7 @@ clean:
 	rm -f gravidy-cpu
 	rm -f gravidy-mpi
 
-distclean: clean
+distclean: 
 	rm -f include/*.o
 	rm -f include/cpu/*.o
 	rm -f include/utils/*.o
