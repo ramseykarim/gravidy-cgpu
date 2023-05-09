@@ -45,7 +45,6 @@
 #else
 #include "utils/OptionsParserBoostless.hpp"
 #endif
-#include "utils/OptionsParser.hpp"
 #define MAXGPUS 4
 
 /**
