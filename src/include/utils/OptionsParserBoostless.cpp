@@ -104,7 +104,7 @@ bool OptionsParser::check_options()
   if (help)
   {
     std::cout << "Usage: " << argv_[0] << " [options]" << std::endl;
-    std::cout << "TO BE UPDATED" << std::endl;
+    std::cout << "TO BE UPDATED. For now, check https://gravidy.xyz/ for command line options." << std::endl;
     return false;
   }
 
