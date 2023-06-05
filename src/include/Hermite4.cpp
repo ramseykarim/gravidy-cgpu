@@ -38,11 +38,8 @@
 /** Constructor in charge of calling the allocation and
  * initialization methods */
 Hermite4::Hermite4(NbodySystem *ns, Logger *logger, NbodyUtils *nu)
+: ns(ns), logger(logger), nu(nu)
 {
-    this->ns     = ns;
-    this->logger = logger;
-    this->nu     = nu;
-
     alloc_arrays_host();
     init_data();
 }
