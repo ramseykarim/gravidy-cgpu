@@ -1,4 +1,7 @@
 .vscode
+test_*
+
+
 *.o
 *.cuo
 *.out
