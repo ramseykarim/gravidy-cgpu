@@ -74,6 +74,14 @@ module load cuda/10.2.89
 make gpu
 ```
 
+- On Nvidia Cluster (for Hackathon)
+
+```bash
+module load gcc/11.2.0
+make cpu
+module load openmpi/gcc/64/4.1.2
+make mpi
+```
 
 ## Licence
 
