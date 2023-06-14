@@ -5,7 +5,7 @@ test_*
 *.o
 *.cuo
 *.out
-*.in
+# *.in
 *~
 # *.o*
 # *.e*
