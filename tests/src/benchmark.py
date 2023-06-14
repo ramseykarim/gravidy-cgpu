@@ -4,9 +4,14 @@ from glob import glob
 import numpy as np
 import matplotlib.pyplot as plt
 
-plt.style.use(["science", "grid"])
+# try:
+#     plt.style.use(["science", "grid"])
+# except FileNotFoundError:
+plt.style.use(["ggplot"])
 
 def main(folder, fig=None):
+    style = 'gravidy'
+    # formatter = {'gravidy': "*-nbody-*.out", 'base': "N*"}[style]
     Ns = []
     coll = {"ElapsedTime": [], "Nsteps": [], "GFLOPS": []}
     for f in glob(f"{folder}/N*"):

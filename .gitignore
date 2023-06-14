@@ -1,22 +1,22 @@
 .vscode
 test_*
-
+*.out.snapshot_*
 
 *.o
 *.cuo
 *.out
 *.in
 *~
-*.o*
-*.e*
+# *.o*
+# *.e*
 gravidy-cpu
 gravidy-mpi
 gravidy-gpu
 gravidy-kepler
 tmp
-output
+/output/
 doc
-m*
+# m*
 SConstruct
 CMakeLists.txt
 
