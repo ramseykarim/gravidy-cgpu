@@ -81,9 +81,11 @@ module load gcc/11.2.0
 make cpu
 module load openmpi/gcc/64/4.1.2
 make mpi
+module unload openmpi/gcc/64/4.1.2
 module load cuda-11.7.1
 module load cuda11.7/toolkit/11.7.1
 # module load nvhpc-23.3-nompi
+make gpu
 ```
 
 ## Licence
