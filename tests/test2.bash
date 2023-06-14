@@ -1,3 +1,4 @@
+#!/bin/bash
 # run tests for this code
 # Usage: ./test2.bash
 
