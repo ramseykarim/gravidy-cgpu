@@ -88,6 +88,19 @@ module load cuda11.7/toolkit/11.7.1
 make gpu
 ```
 
+To run the test
+```bash
+module load conda
+conda create -n gravidy python=3.9
+conda activate gravidy
+conda init bash
+exec bash
+module load conda
+conda activate gravidy
+conda install numpy pandas matplotlib
+bash test2.bash
+```
+
 ## Licence
 
 ```

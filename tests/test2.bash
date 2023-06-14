@@ -13,11 +13,12 @@ for power in {1..8}
 do
   N=$((2**($power+6)))
   echo "N = $N"
-  input="../input/0${power}-nbody-p${N}_m1.in"
-  echo $input
+  input="input/gravidy-default-input/0${power}-nbody-p${N}_m1.in"
   output_dir="${folder_name}/N${N}"
   mkdir -p $output_dir
   ../src/gravidy-cpu -i "$input" -o "${output_dir}/output.gravidy" -t 5 2>&1 >> "${output_dir}/log.txt"
 done
 
+module load conda
+conda activate gravidy
 python src/benchmark.py ${folder_name} "${folder_name}/benchmark.jpg"
