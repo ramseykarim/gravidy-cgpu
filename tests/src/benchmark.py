@@ -36,6 +36,12 @@ def main(folder, fig=None):
     else:
         plt.savefig(fig, dpi=300)
 
+    # also write this as a table for alternate processing
+    # note the first column (logN) is not sorted
+    table = folder + '/benchmark.tab'
+    np.savetxt(table, np.transpose([Ns,coll["ElapsedTime"],coll["Nsteps"],coll["GFLOPS"]]),
+               header='log(N) ElapsedTime  Nsteps  GFLOPS')
+    print("Wrote ",table)
 
 if __name__ == "__main__":
     if len(sys.argv) >= 3:
