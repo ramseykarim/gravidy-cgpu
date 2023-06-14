@@ -1,13 +1,14 @@
 use_boost = 0
 
 # Makefile
-CUDA_PATH=/cvmfs/hpcsw.umd.edu/spack-software/2022.06.15/linux-rhel8-zen/gcc-8.4.0/cuda-10.2.89-omyaqz6mv6t3fihltamr67fnj5xij5an
+# CUDA_PATH=/cvmfs/hpcsw.umd.edu/spack-software/2022.06.15/linux-rhel8-zen/gcc-8.4.0/cuda-10.2.89-omyaqz6mv6t3fihltamr67fnj5xij5an
 MPI_LIB_PATH=$(OPENMPI_LIBDIR)
 MPI_INC_PATH=$(OPENMPI_INCDIR)
 
 # Compilers
 CXX=  g++
-NVCC= $(CUDA_PATH)/bin/nvcc
+# NVCC= $(CUDA_PATH)/bin/nvcc
+NVCC= nvcc
 
 # FLAGS
 
