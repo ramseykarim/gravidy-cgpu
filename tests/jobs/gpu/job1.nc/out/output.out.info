@@ -1,0 +1,7 @@
+# NumberParticles:                    8192
+# Softening:                        0.0001
+# EtaTimestep:                        0.01
+# IntegrationTime:                       5
+# PrintScreen:                           0
+# InputFilename:      ../../../../input/07-nbody-p8192_m1.in
+# OutputFilename:     out/output.out      
