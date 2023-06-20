@@ -1,7 +1,0 @@
-# NumberParticles:                   32768
-# Softening:                        0.0001
-# EtaTimestep:                        0.01
-# IntegrationTime:                    0.25
-# PrintScreen:                           0
-# InputFilename:      ../../../input/gravidy-default-input/09-nbody-p32768_m1.in
-# OutputFilename:     out/output.out      

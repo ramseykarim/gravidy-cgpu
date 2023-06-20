@@ -1,6 +1,7 @@
 .vscode
 test_*
 *.out.snapshot_*
+trash
 
 *.o
 *.cuo
