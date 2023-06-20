@@ -7,4 +7,4 @@ runjob:
 	bash ../src/runtest.bash
 
 compare:
-	bash ../src/compare.bash test_2023-06-20_15\:42\:49_EST
+	bash ../src/compare.bash compare_2023-06-20_15\:42\:49_EST
