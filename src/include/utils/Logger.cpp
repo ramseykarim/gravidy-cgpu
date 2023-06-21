@@ -93,16 +93,16 @@ void Logger::write_snapshot(unsigned int snapshot_number, double ITIME)
 
         // Scientific notation
         out_file << std::scientific;
-        gstream->precision(6);
-        out_file << std::setw(15) << std::right << ns->h_r[i].w;
+        gstream->precision(17);
+        out_file << std::setw(28) << std::right << ns->h_r[i].w;
 
-        out_file << std::setw(15) << std::right << ns->h_r[i].x;
-        out_file << std::setw(15) << std::right << ns->h_r[i].y;
-        out_file << std::setw(15) << std::right << ns->h_r[i].z;
+        out_file << std::setw(28) << std::right << ns->h_r[i].x;
+        out_file << std::setw(28) << std::right << ns->h_r[i].y;
+        out_file << std::setw(28) << std::right << ns->h_r[i].z;
 
-        out_file << std::setw(15) << std::right << ns->h_v[i].x;
-        out_file << std::setw(15) << std::right << ns->h_v[i].y;
-        out_file << std::setw(15) << std::right << ns->h_v[i].z;
+        out_file << std::setw(28) << std::right << ns->h_v[i].x;
+        out_file << std::setw(28) << std::right << ns->h_v[i].y;
+        out_file << std::setw(28) << std::right << ns->h_v[i].z;
 
         out_file << std::endl;
     }
@@ -292,7 +292,7 @@ void Logger::print_all(double ITIME, unsigned int snapshot_number)
 
             // Scientific notation
             *gstream << std::scientific;
-            gstream->precision(6);
+            gstream->precision(14);
             *gstream << std::setw(15) << std::right << ns->h_r[i].w;
 
             *gstream << std::setw(15) << std::right << ns->h_r[i].x;

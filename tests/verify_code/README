@@ -1,0 +1,1 @@
+For this to work, you will need to have used 'module load python3' and installed numpy (pip install --user numpy)
