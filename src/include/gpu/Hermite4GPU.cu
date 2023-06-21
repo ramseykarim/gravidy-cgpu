@@ -704,6 +704,7 @@ void Hermite4GPU::predicted_pos_vel_cpu(double ITIME)
 {
 
     ns->gtime.prediction_ini = omp_get_wtime();
+    #pragma omp parallel for
     for (unsigned int i = 0; i < ns->n; i++)
     {
         double dt  = ITIME - ns->h_t[i];
