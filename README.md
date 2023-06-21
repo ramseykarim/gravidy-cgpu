@@ -101,6 +101,21 @@ conda install numpy pandas matplotlib
 bash test2.bash
 ```
 
+## Flowchart
+
+You can render UML diagrams using [Mermaid](https://mermaidjs.github.io/). For example, this will produce a sequence diagram:
+
+And this will produce a flow chart:
+
+```mermaid
+graph LR
+A[Square Rect] -- Link text --> B((Circle))
+A --> C(Round Rect)
+B --> D{Rhombus}
+C --> D
+```
+
+
 ## Licence
 
 ```
