@@ -105,14 +105,15 @@ bash test2.bash
 
 You can render UML diagrams using [Mermaid](https://mermaidjs.github.io/). For example, this will produce a sequence diagram:
 
-And this will produce a flow chart:
+Here is a flow chart for 32k particles: 
+
+TODO:
+
+- There are gaps in CUDA HW which are not included in the following chart. They could related to `cudaMemcpyAsync` but I don’t know exactly what they are about.
 
 ```mermaid
-graph LR
-A[Square Rect] -- Link text --> B((Circle))
-A --> C(Round Rect)
-B --> D{Rhombus}
-C --> D
+graph TB
+A[Pure CPU, 80s] --> B[HtoD, 0.5ms] --> C((k_prediction, <0.1ms)) --> D[DtoH, 0.2ms] --> E[HtoD, <0.1ms] --> F((k_update, 0.4ms)) --> G[DtoH, <0.1ms] --> H[HtoD, 0.3ms] -- 11k times --> C
 ```
 
 
