@@ -700,7 +700,7 @@ void Hermite4GPU::update_acc_jrk_cpu(unsigned int nact)
 /** Method that predict all the particles to the current integration time
 CPU version
  */
-void Hermite4CPU::predicted_pos_vel_cpu(double ITIME)
+void Hermite4GPU::predicted_pos_vel_cpu(double ITIME)
 {
 
     ns->gtime.prediction_ini = omp_get_wtime();
