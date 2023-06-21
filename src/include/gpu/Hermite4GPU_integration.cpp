@@ -90,7 +90,7 @@ void Hermite4GPU::integration()
 
         save_old_acc_jrk(nact);
 
-        predicted_pos_vel(ITIME);
+        predicted_pos_vel_cpu(ITIME);
 
         if (nact > NACT_LO_LIMIT) {
           // GPU; number of particles in this iteration is large enough, let GPU do it

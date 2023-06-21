@@ -382,7 +382,7 @@ void Hermite4GPU::init_acc_jrk()
  *  The second kernel, reduction, is in charge of summing all the preliminary forces
  *  to the final value for all the active particles.
  */
-void Hermite4GPU::update_acc_jrk(int nact)
+void Hermite4GPU::update_acc_jrk(unsigned int nact)
 {
     // Timer begin
     ns->gtime.update_ini = omp_get_wtime();
@@ -694,4 +694,35 @@ void Hermite4GPU::update_acc_jrk_cpu(unsigned int nact)
         }
     }
     ns->gtime.update_end += omp_get_wtime() - ns->gtime.update_ini;
+}
+
+
+/** Method that predict all the particles to the current integration time
+CPU version
+ */
+void Hermite4CPU::predicted_pos_vel_cpu(double ITIME)
+{
+
+    ns->gtime.prediction_ini = omp_get_wtime();
+    for (unsigned int i = 0; i < ns->n; i++)
+    {
+        double dt  = ITIME - ns->h_t[i];
+        double dt2 = (dt  * dt);
+        double dt3 = (dt2 * dt);
+
+        double dt2c = dt2/2.0;
+        double dt3c = dt3/6.0;
+
+        ns->h_p[i].r[0] = (dt3c * ns->h_f[i].a1[0]) + (dt2c * ns->h_f[i].a[0]) + (dt * ns->h_v[i].x) + ns->h_r[i].x;
+        ns->h_p[i].r[1] = (dt3c * ns->h_f[i].a1[1]) + (dt2c * ns->h_f[i].a[1]) + (dt * ns->h_v[i].y) + ns->h_r[i].y;
+        ns->h_p[i].r[2] = (dt3c * ns->h_f[i].a1[2]) + (dt2c * ns->h_f[i].a[2]) + (dt * ns->h_v[i].z) + ns->h_r[i].z;
+
+        ns->h_p[i].v[0] = (dt2c * ns->h_f[i].a1[0]) + (dt * ns->h_f[i].a[0]) + ns->h_v[i].x;
+        ns->h_p[i].v[1] = (dt2c * ns->h_f[i].a1[1]) + (dt * ns->h_f[i].a[1]) + ns->h_v[i].y;
+        ns->h_p[i].v[2] = (dt2c * ns->h_f[i].a1[2]) + (dt * ns->h_f[i].a[2]) + ns->h_v[i].z;
+
+        ns->h_p[i].m = ns->h_r[i].w;
+
+    }
+    ns->gtime.prediction_end += omp_get_wtime() - ns->gtime.prediction_ini;
 }
