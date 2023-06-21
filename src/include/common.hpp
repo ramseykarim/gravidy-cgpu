@@ -226,8 +226,17 @@ typedef struct Predictor {
  *  three dimensions (Jerk).
  *  */
 typedef struct Forces {
+  #if defined(SINGLEFORCE)
+    float a[3];
+    float a1[3];
+  #elif defined(MIXFORCE)
+    double a[3];
+    float a1[3];
+  #else
     double a[3];
     double a1[3];
+  #endif
+
 } Forces;
 
 /** @struct Gtime

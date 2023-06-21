@@ -109,7 +109,7 @@ OBJS_GPU += include/gpu/Hermite4GPU_integration.o
 OBJS_GPU += include/gpu/Hermite4GPU.cuo
 
 # Main rules
-.PHONY: cpu pn mpi gpu doxy clean distclean
+.PHONY: cpu pn mpi gpu doxy clean distclean cpus cpum mpis mpim gpus gpum
 
 all: cpu
 
@@ -124,8 +124,24 @@ mpi: gravidy-mpi
 gpu: CXXFLAGS+=$(LINKFLAGS)
 gpu: gravidy-gpu
 
+gpuf: CXXFLAGS+=$(LINKFLAGS) -DMIXFORCE
+gpuf: gravidy-gpu
+gpus: CXXFLAGS+=$(LINKFLAGS) -DSINGLEFORCE
+gpus: gravidy-gpu
+
+cpuf: CXXFLAGS+= -DMIXFORCE
+cpuf: gravidy-cpu
+cpus: CXXFLAGS+= -DSINGLEFORCE
+cpus: gravidy-cpu
+
+mpif: CXXFLAGS+=$(MPIFLAGS) -DMIXFORCE
+mpif: gravidy-mpi
+mpis: CXXFLAGS+=$(MPIFLAGS) -DSINGLEFORCE
+mpis: gravidy-mpi
+
 print_pn:
 	@echo "PN implementation is enabled in CPU version"
+
 
 # Rules to generate CUDA object
 %.cuo : %.cu
