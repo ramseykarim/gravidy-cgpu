@@ -1,4 +1,4 @@
-set -x
+# set -x
 
 thedir=$(ls -t1 | head -n 1)
 if [[ $thedir == "Makefile" ]]; then
@@ -6,5 +6,6 @@ if [[ $thedir == "Makefile" ]]; then
 fi
 echo thedir = $thedir
 if [[ -d "$thedir"/gpu1 ]]; then
-  diff "$thedir"/gpu1/out/output.out.snapshot_00003 $1/gpu1/out/output.out.snapshot_00003 
+  python ../src/diff.py reference/gpu1/out/output.out.snapshot_00003 $thedir/gpu1/out/output.out.snapshot_00003 
+  # diff "$thedir"/gpu1/out/output.out.snapshot_00003 $1/gpu1/out/output.out.snapshot_00003 
 fi
