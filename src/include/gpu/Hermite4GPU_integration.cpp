@@ -34,6 +34,7 @@
  *
  */
 #include "Hermite4GPU.cuh"
+#include "nvToolsExt.h"
 
 void Hermite4GPU::integration()
 {
@@ -90,8 +91,13 @@ void Hermite4GPU::integration()
 
         save_old_acc_jrk(nact);
 
+        nvtxRangePushA("predicting");
         predicted_pos_vel_cpu(ITIME);
+        nvtxRangePop();
 
+        char str_nvtx[128];
+        sprintf(str_nvtx, "update_%s_%d", nact>NACT_LO_LIMIT ? "gpu" : "cpu", nact);
+        nvtxRangePushA(str_nvtx);
         if (nact > NACT_LO_LIMIT) {
           // GPU; number of particles in this iteration is large enough, let GPU do it
           update_acc_jrk(nact);
@@ -99,6 +105,7 @@ void Hermite4GPU::integration()
           // CPU; number of particles in this iteration too small, have CPU do it
           update_acc_jrk_cpu(nact);
         }
+        nvtxRangePop();
 
 
         correction_pos_vel(ITIME, nact);
